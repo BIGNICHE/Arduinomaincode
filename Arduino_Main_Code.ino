@@ -21,7 +21,7 @@ int travelTime;
 Servo backServo;
 Servo leftServo;
 Servo rightServo;
-Stepper elevatorStepper(stepsPerRevolution, 6,7,8,9);
+Stepper elevatorStepper(stepsPerRevolution, 31,32,33,34);
 
 #define bumpSwitchForwardPin 22;
 #define bumpSwitchBackPin 23;
@@ -35,18 +35,24 @@ int currTime;
 
 
 void setup() {
-  pinMode(4, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(12, OUTPUT);
-  backServo.attach(10);
-  leftServo.attach(11);
-  rightServo.attach(12);
+//  pinMode(4, OUTPUT);
+//  pinMode(5, OUTPUT);
+//  pinMode(6, OUTPUT);
+//  pinMode(7, OUTPUT);
+//  pinMode(8, OUTPUT);
+//  pinMode(9, OUTPUT);
+//  pinMode(10, OUTPUT);
+//  pinMode(11, OUTPUT);
+//  pinMode(12, OUTPUT);
+  pinMode(30, OUTPUT);
+  digitalWrite(30, HIGH);
+  pinMode(43, OUTPUT);
+  digitalWrite(43, HIGH);       // This block is the enables for the motor drivers
+  
+  backServo.attach(44);
+  leftServo.attach(45);
+  rightServo.attach(46);
+  elevatorStepper.setSpeed(150);
   
 
   
@@ -54,18 +60,32 @@ void setup() {
 
 void loop() {
 
-  forward(
+  lowerArm(stepsLowerScoop);
+
+  break();
  
 
 }
 
-void lowerArm(stepsLowerScoop); {
+void lowerArm(int finalSteps); {
 
-  for (int currentSteps = 0; currentSteps < stepsLowerScoop
-  {
-  elevatorStepper.step(-10);
-  currentSteps = currentSteps + 10;
+  for (int currentSteps = 0;currentSteps < finalSteps; currentSteps = currentSteps + 200) {
+    while(digitalRead(forwardBumpSwitch) = HIGH) {
+      leftServo.write(0);
+      rightServo.write(0);
+      backServo.write(90);
+    }
+    while(digitalRead(backBumpSwitch) = HIGH) {
+      leftServo.write(180);
+      rightServo.write(180);
+      backServo.write(90);
+    }
+
+    stop_();
+    
+    myStepper.step(-200);
   }
+  delay(50);
   
 }
 
