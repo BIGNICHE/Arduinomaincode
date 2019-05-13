@@ -69,6 +69,8 @@ void loop() {
 
 void lowerArm(int finalSteps); {
 
+
+  // This block checks if either bump switch is triggered
   for (int currentSteps = 0;currentSteps < finalSteps; currentSteps = currentSteps + 200) {
     while(digitalRead(forwardBumpSwitch) = HIGH) {
       leftServo.write(0);
@@ -81,7 +83,9 @@ void lowerArm(int finalSteps); {
       backServo.write(90);
     }
 
-    stop_();
+    
+    
+    stopChassis();
     
     myStepper.step(-200);
   }
@@ -103,7 +107,7 @@ void forward(double distance) {
     backServo.write(90);
   }
 
-  stop_();
+  stopChassis();
   
 }
 
@@ -117,12 +121,12 @@ void backward(double distance) {
     backServo.write(90);
   }
 
-  stop_();
+  stopChassis();
   
 }
 
 
-void stop_(); {
+void stopChassis(); {
   leftServo.write(90);
   rightServo.write(90);
   backServo.write(90);
@@ -130,7 +134,7 @@ void stop_(); {
 
 void bumpForward() {
 
-  stop_();
+  stopChassis();
   
   while (digitalRead(bumpSwitchBackPin) = HIGH) {
     
@@ -139,13 +143,13 @@ void bumpForward() {
     backServo.write(90);
   }
 
-  stop_();
+  stopChassis();
   
 }
 
 void bumpBackward() {
 
-  stop_();
+  stopChassis();
   
   while (digitalRead(bumpSwitchBackPin) = HIGH) {
     
@@ -154,6 +158,6 @@ void bumpBackward() {
     backServo.write(90);
   }
 
-  stop_();
+  stopChassis();
   
 }
