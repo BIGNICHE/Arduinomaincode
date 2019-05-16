@@ -26,6 +26,7 @@ Servo backServo;
 Servo leftServo;
 Servo rightServo;
 Servo scoopArticulateServo;
+Servo releaseServo;
 Stepper elevatorStepper(stepsPerRevolution, 31,32,33,34);
 
 int bumpSwitchForwardPin = 2;
@@ -46,7 +47,8 @@ void setup() {
   backServo.attach(28);
   leftServo.attach(29);
   rightServo.attach(30);
-  scoopArticulateServo.attach(31);
+  scoopArticulateServo.attach(33);
+  releaseServo.attach(41);
   elevatorStepper.setSpeed(60);
   
   pinMode(bumpSwitchForwardPin, INPUT_PULLUP);
@@ -67,21 +69,20 @@ void setup() {
 void loop() {
 
 
-  delay(4000);
-
-
+  delay(2000);
   scoopArticulateServo.write(50);
-
+  forward(4000);
+  scoopArticulateServo.write(120);
+  left(15000);
+  scoopArticulateServo.write(50);
+  backward(500);
+  rotateClockwise(1500);
 
   forward(4000);
 
-  left(15000);
-
-
-
-  backward(500);
-
-  rotateClockwise(500);
+  releaseServo.write(0);
+  delay(1000);
+  
 
   
 
@@ -120,6 +121,16 @@ void rotateClockwise(int distance) {
 void left(double distance) {
   int time_current = millis();
   do {
+
+    if (bumpForwardState = 1) {
+      forward(100);
+      
+      bumpForwardState = 0;
+    } else if (bumpBackwardState = 1) {
+      backward(100);
+      bumpBackwardState = 0;
+    }
+   
   backServo.write(180);
   leftServo.write(70);
   rightServo.write(70);
@@ -133,6 +144,16 @@ void right(double distance) {
 
   int time_current = millis();
   do {
+
+    if (bumpForwardState = 1) {
+      forward(100);
+      
+      bumpForwardState = 0;
+    } else if (bumpBackwardState = 1) {
+      backward(100);
+      bumpBackwardState = 0;
+    }
+    
   backServo.write(0);
   leftServo.write(100);
   rightServo.write(100);
